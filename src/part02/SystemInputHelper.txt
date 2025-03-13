@@ -1,0 +1,65 @@
+package part02;
+
+import console.Console;
+import java.awt.Color;
+import java.util.Scanner;
+
+/**
+ * Helper class that uses System.in for input when Console methods aren't available
+ */
+public class SystemInputHelper {
+    private Console con;
+    private Scanner scanner;
+    
+    public SystemInputHelper(Console con) {
+        this.con = con;
+        this.scanner = new Scanner(System.in);
+    }
+    
+    /**
+     * Reads a line of text from System.in
+     */
+    public String readLine() {
+        con.println(" (Enter your input in the terminal/command prompt)");
+        return scanner.nextLine();
+    }
+    
+    /**
+     * Reads an integer from System.in
+     */
+    public int readInt() {
+        con.println(" (Enter a number in the terminal/command prompt)");
+        while (true) {
+            try {
+                return Integer.parseInt(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                con.setColour(Color.RED);
+                con.println(" Invalid number. Please try again:");
+                con.setColour(Color.BLACK);
+            }
+        }
+    }
+    
+    /**
+     * Reads a double from System.in
+     */
+    public double readDouble() {
+        con.println(" (Enter a decimal number in the terminal/command prompt)");
+        while (true) {
+            try {
+                return Double.parseDouble(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                con.setColour(Color.RED);
+                con.println(" Invalid number. Please try again:");
+                con.setColour(Color.BLACK);
+            }
+        }
+    }
+    
+    /**
+     * Closes the scanner when done
+     */
+    public void close() {
+        scanner.close();
+    }
+}
