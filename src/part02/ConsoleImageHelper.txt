@@ -1,0 +1,95 @@
+package part02;
+
+import console.Console;
+import java.awt.Color;
+import java.awt.Font;
+import java.io.File;
+
+/**
+ * Helper class to demonstrate how to use images in the Console
+ */
+public class ConsoleImageHelper {
+    
+    /**
+     * Checks if the Images folder exists and creates it if it doesn't
+     */
+    public static void ensureImagesFolderExists() {
+        File imagesFolder = new File("Images");
+        if (!imagesFolder.exists()) {
+            imagesFolder.mkdir();
+            System.out.println("Created Images folder");
+        }
+    }
+    
+    /**
+     * Lists all images in the Images folder
+     */
+    public static void listAvailableImages() {
+        File imagesFolder = new File("Images");
+        if (imagesFolder.exists() && imagesFolder.isDirectory()) {
+            File[] files = imagesFolder.listFiles();
+            if (files != null && files.length > 0) {
+                System.out.println("Available images:");
+                for (File file : files) {
+                    if (file.isFile() && isImageFile(file.getName())) {
+                        System.out.println("- " + file.getName());
+                    }
+                }
+            } else {
+                System.out.println("No images found in the Images folder");
+            }
+        } else {
+            System.out.println("Images folder does not exist");
+        }
+    }
+    
+    /**
+     * Checks if a file is an image based on its extension
+     */
+    private static boolean isImageFile(String fileName) {
+        String lowerCaseName = fileName.toLowerCase();
+        return lowerCaseName.endsWith(".jpg") || 
+               lowerCaseName.endsWith(".jpeg") || 
+               lowerCaseName.endsWith(".png") || 
+               lowerCaseName.endsWith(".gif") || 
+               lowerCaseName.endsWith(".bmp");
+    }
+    
+    /**
+     * Displays a message about required images for the library application
+     */
+    public static void displayRequiredImagesInfo(Console con) {
+        con.setFont(new Font("Arial", Font.BOLD, 16));
+        con.setColour(Color.BLUE);
+        con.println("\nRequired Images for QUB Library Application:");
+        con.println("==========================================");
+        
+        con.setFont(new Font("Arial", Font.PLAIN, 14));
+        con.setColour(Color.BLACK);
+        con.println("\nPlease ensure the following images are in your Images folder:");
+        con.println("1. library_logo.png - Logo for the library header");
+        con.println("2. book1.png, book2.png - Decorative book images");
+        con.println("3. default_cover.png - Default book cover image");
+        con.println("4. medal1.png, medal2.png, medal3.png - Medal icons for top ranked books");
+        con.println("5. Book cover images for each book in your library:");
+        con.println("   - java_intro.jpg");
+        con.println("   - gatsby.jpg");
+        con.println("   - brief_history.jpg");
+        con.println("   - dictionary.jpg");
+        con.println("   - mockingbird.jpg");
+        
+        con.println("\nIf these images are not available, the application will still work,");
+        con.println("but without the visual enhancements.");
+    }
+    
+    public static void main(String[] args) {
+        // Example usage
+        ensureImagesFolderExists();
+        listAvailableImages();
+        
+        Console con = new Console(true);
+        con.setSize(800, 600);
+        con.setVisible(true);
+        displayRequiredImagesInfo(con);
+    }
+}
